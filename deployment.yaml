@@ -1,0 +1,31 @@
+piVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: debian
+spec:
+  selector:
+    matchLabels:
+      app: debian
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: debian
+    spec:
+      containers:
+      - name: debian
+        image: tolaose/debian
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 3
