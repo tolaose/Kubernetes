@@ -1,4 +1,4 @@
-piVersion: apps/v1beta2
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: debian
@@ -29,3 +29,21 @@ spec:
             port: 8080
           initialDelaySeconds: 15
           periodSeconds: 3
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: debian
+  labels:
+    app: debian
+    name: debian
+spec:
+  selector:
+    app: debian
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
